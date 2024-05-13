@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Weather App</title>
+    <link rel="icon" href="C:\Users\k.Hari dharshan\Downloads\sun.png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="card">
+      <h1>Weather App</h1>
+      <div class="search">
+        <input type="text" placeholder="Enter City name" spellcheck="false" >
+        <button> <img src= "C:\Users\k.Hari dharshan\Downloads\search.png" ></button>
+      </div>
+      <div class="weather">
+        <div class="weather-icon"></div>
+        <!-- <img src= "C:\Users\k.Hari dharshan\Downloads\weather.png" class="weather-icon" id="image"> -->
+        <h1 class="temp"></h1>
+        <h2 class="city"></h2>
+        <div class="description"></div>
+        <div class="details">
+          <div class="col">
+            <img src="C:\Users\k.Hari dharshan\Downloads\humidity.png">
+            <div>
+              <p class="humidity"></p>
+              <p>Humidity</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="C:\Users\k.Hari dharshan\Downloads\wind (1).png">
+            <div>
+              <p class="wind"></p>
+              <p>Wind speed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<script>
+const apiKey= "91da9886d6110f9445bcf24f852c73b8";
+const apiUrl= "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+const searchBox= document.querySelector(".search input");
+const searchBtn= document.querySelector(".search button");
+
+async function checkweather(city) {
+    const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+    var data = await response.json();
+    const icon = document.querySelector('.weather-icon');
+    console.log(data);
+    icon.innerHTML = `<img src="http://openweathermap.org/img/wn/${data.weather[0].icon}.png" alt="Weather Icon">`;
+    document.querySelector(".city").innerHTML=data.name;
+    document.querySelector(".temp").innerHTML= Math.round(data.main.temp) + "°c";
+    document.querySelector(".description").innerHTML= data.weather[0].description;
+    document.querySelector(".humidity").innerHTML=data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML=data.wind.speed + "km/hr";
+    document.querySelector(".weather").style.display="block"
+}
+searchBtn.addEventListener("click", ()=>{
+    checkweather(searchBox.value);
+})
+    </script>
+  </body>
+</html>
